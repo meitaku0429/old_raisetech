@@ -1,0 +1,268 @@
+@charset "utf-8";
+// ブレークポイントを変数で指定
+$breakpoints: (
+    sp: "screen and (max-width: 752px)",
+    tab: "screen and (max-width: 1175px)",
+    pc: "screen and (max-width: 1060px)",
+    first: "screen and (max-width: 1280px)",
+);
+// メディアクエリを@mixinで定義
+@mixin media($breakpoint) {
+    @media #{map-get($breakpoints, $breakpoint)} {
+        @content;
+    }
+}
+
+@include media(first) {
+    .header-text {
+        display: none;
+    }
+    .gnav1 > a {
+        padding: 0 10px;
+    }
+    .application a {
+        padding: 0 10px;
+    }
+}
+@include media(pc) {
+    .gnav1 {
+        display: none;
+    }
+    .application {
+        display: none;
+    }
+    .drawer-menu {
+        display: none;
+    }
+}
+
+@include media(tab) {
+    .gnav1 {
+        display: none;
+    }
+    .application {
+        display: none;
+    }
+    header {
+        height: 50px;
+    }
+    .header-left {
+        padding-left: 10px;
+    }
+    .header-logo img {
+        width: 144px;
+    }
+
+    // ハンバーガーメニュー
+    $btnwidth: 24px;
+    $btnheight: 2px;
+
+    .p-hamburger {
+        width: 50px;
+        height: 50px;
+        // background-color: #fff;
+        position: fixed;
+        right: 0;
+        top: 0;
+        display: block;
+
+        // ３本横線
+        &::before,
+        &::after {
+            content: "";
+            width: $btnwidth;
+            height: $btnheight;
+            background: #2498b3;
+            position: absolute;
+            left: calc(50% - (#{$btnwidth} / 2));
+            display: block;
+            transition: transform 0.2s;
+        }
+        &::before {
+            top: 15px;
+        }
+        &::after {
+            top: 32px;
+        }
+        > span {
+            width: $btnwidth;
+            height: $btnheight;
+            font-size: 0;
+            background: linear-gradient(to right, #2498b3, #2498b3) repeat-x #2498b3; //真ん中の線の色
+            background-size: auto $btnheight;
+            position: absolute;
+            left: calc(50% - (#{$btnwidth} / 2));
+            top: 47%;
+            transition: transform 0.2s;
+        }
+        &.open {
+            background-color: #2498b3;
+            &::before {
+                transform: rotate(45deg);
+                top: 24px;
+                background-color: #fff;
+            }
+            &::after {
+                transform: rotate(-45deg);
+                top: 24px;
+                background-color: #fff;
+            }
+            > span {
+                background: none;
+            }
+        }
+    }
+    // ハンバーガーメニューボタン--ここまで
+    // ここからハンバーガーメニューのスタイル
+    .nav-menu {
+        // display: flex;
+        width: 100%;
+        top: 100%;
+        left: 0;
+    }
+    .gnav {
+        // display: block;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .gnav1 {
+        background-color: #fff;
+        position: relative;
+        &.open {
+            & > a::before {
+                display: block;
+                content: "";
+                position: absolute;
+                top: 35px;
+                right: 13px;
+                width: 24px;
+                height: 2px;
+                margin-top: -1px;
+                background-color: #121212;
+                // z-index: 9;
+            }
+
+            & > a:hover::after {
+                display: none;
+            }
+        }
+        &.close {
+            & > a::after {
+                display: block;
+                content: "";
+                position: absolute;
+                top: 35px;
+                right: 24px;
+                width: 2px;
+                height: 24px;
+                margin-top: -12px;
+                background-color: #121212;
+            }
+        }
+    }
+    .teacher {
+        &.open {
+            & > a::before,
+            a::after {
+                background-color: #fff;
+            }
+            & > a:hover::before,
+            a:hover::after {
+                background-color: #d4f1f8;
+            }
+        }
+    }
+    .gnav-sub {
+        position: static;
+        width: 100%;
+        height: 0;
+        > a {
+            // width: 100%;
+            height: 60px;
+            background-color: #f3fafb;
+            padding: 0 60px 0 15px;
+            display: block;
+            &:hover {
+                background-color: #fff;
+                color: #2498b3;
+            }
+        }
+    }
+
+    // ハンバーガーメニュー ここまで
+
+    main {
+        padding-top: 50px;
+    }
+}
+
+@include media(sp) {
+    // 背景画像ーーここからーー
+    .main-contents,
+    .main-bg,
+    .sub-bg {
+        width: 100%;
+        background-size: cover;
+    }
+    .main-contents {
+        height: 160px;
+        top: 0px;
+        padding-top: 0;
+        padding-bottom: 320px;
+        background-position: center -30px;
+        background-size: cover;
+    }
+    .main-bg {
+        background-size: cover;
+        background-position: center -30px;
+    }
+    .sub-bg {
+        background-size: cover;
+        background-position: center -30px;
+    }
+    // 背景画像ーーここまでーー
+    .l-main {
+        height: 160px;
+        width: 100%;
+        border-radius: 0;
+        padding-top: 20px;
+        margin-top: 160px;
+        p {
+            font-size: 13px;
+            padding: 0 0 10px 0;
+        }
+    }
+    .l-main-logo {
+        img {
+            display: none;
+        }
+    }
+    .in-btn {
+        width: 230px;
+        height: 44px;
+        font-size: 1rem;
+        padding: 10px 10px;
+        white-space: nowrap;
+        transition: 0.5s;
+        transition-property: all;
+        transition-duration: 0.5s;
+        transition-timing-function: ease;
+        transition-delay: 0s;
+    }
+    .contents-box {
+        flex-direction: column;
+        padding-top: 250px;
+    }
+    .content-messege {
+        margin: auto;
+        width: 100%;
+    }
+    .icon-font {
+        margin: 0 auto;
+    }
+    .content-ttl-sub {
+        align-items: center;
+        width: auto;
+    }
+}
